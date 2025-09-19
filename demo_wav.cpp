@@ -1,6 +1,8 @@
 #include "win32audio.h"
 #include "typedefs.h"
 
+#include <windows.h>
+
 #define PATH_TO_WAV "w:/win32audio/sound.wav"
 
 struct WAV
