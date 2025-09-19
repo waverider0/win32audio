@@ -10,7 +10,7 @@ struct WAV
   WAVEFORMATEX *format;
 };
 
-// NOTE: for packing more than one variable in `LPVOID thread_data`
+// NOTE: for passing more than one variable to 'play_wav()'
 struct PlayWavThreadData
 {
   Win32Audio *wa;
