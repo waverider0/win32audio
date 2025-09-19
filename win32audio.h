@@ -15,6 +15,20 @@ public:
   LONG ref_count = 1;
   volatile BOOL device_changed = FALSE;
 
+  // IUnknown methods
+
+  HRESULT STDMETHODCALLTYPE QueryInterface(REFIID iid, void **ppv)
+  {
+    if (iid == __uuidof(IUnknown) || iid == __uuidof(IMMNotificationClient))
+    {
+      *ppv = this;
+      AddRef();
+      return S_OK;
+    }
+    *ppv = nullptr;
+    return E_NOINTERFACE;
+  }
+
   ULONG STDMETHODCALLTYPE AddRef()
   {
     return InterlockedIncrement(&ref_count);
@@ -28,17 +42,7 @@ public:
     return ref;
   }
 
-  HRESULT STDMETHODCALLTYPE QueryInterface(REFIID iid, void **ppv)
-  {
-    if (iid == __uuidof(IUnknown) || iid == __uuidof(IMMNotificationClient))
-    {
-      *ppv = this;
-      AddRef();
-      return S_OK;
-    }
-    *ppv = nullptr;
-    return E_NOINTERFACE;
-  }
+  // IMMNotificationClient methods
 
   HRESULT STDMETHODCALLTYPE OnDeviceStateChanged(LPCWSTR device_id, DWORD new_state)
   {
